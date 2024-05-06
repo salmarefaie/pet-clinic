@@ -4,3 +4,46 @@
     dest: /home/pet-clinic
 
 
+- name: extract tomcat 
+  unarchive:
+    src: /home/pet-clinic/apache-tomcat-10.1.23.tar.gz
+    dest: /home/pet-clinic/
+    remote_src: yes
+
+
+- name: Run 'id' command
+  command: id
+  register: id_output
+
+- name: Show 'id' command output
+  debug:
+        msg: "{{ id_output.stdout }}"
+
+
+- name: Run 'id' command
+  command: pwd
+  register: java_output
+
+- name: Show 'id' command output
+  debug:
+        msg: "{{ java_output.stdout }}"
+
+
+- name: make application running on port 9090
+  lineinfile:
+        path: /home/pet-clinic/apache-tomcat-10.1.23/conf/server.xml
+        regexp: '<Connector port="8080"'
+        line: '<Connector port="9090"'
+  notify:
+       - stop tomcat
+       - start tomcat
+
+
+- name: configure tomcat to have access to its manager
+  lineinfile:
+        path: /home/pet-clinic/apache-tomcat-10.1.23/conf/tomcat-users.xml 
+        insertbefore: '</tomcat-users>'
+        line: '<role rolename="manager-gui"/> <user username="tomcat" password="password" roles="manager-gui"/>'
+  notify:
+       - stop tomcat
+       - start tomcat

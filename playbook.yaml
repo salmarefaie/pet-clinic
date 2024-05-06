@@ -7,9 +7,10 @@
 - name: install required packages
   become: true
   become_method: su
-  become_user: pet-clinic    
-  hosts: localhost                                 
+  become_user: pet-clinic
+  become_flags: '--login'    
+  hosts: localhost                              
   roles:
-    - role: roles/jenkins
+    #- role: roles/jenkins
     - role: roles/tomcat
     #- role: roles/nagios
