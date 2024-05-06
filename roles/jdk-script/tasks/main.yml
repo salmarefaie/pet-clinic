@@ -1,0 +1,8 @@
+- name: make script excutable
+  file:
+    path: /home/salma/task/roles/jdk-script/files/script.sh
+    mode: +x
+
+
+- name: run sctipt to create pet user and install jdk 
+  script: script.sh

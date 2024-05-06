@@ -1,0 +1,11 @@
+[Unit]
+Description=Jenkins Service
+
+[Service]
+User=pet-clinic
+WorkingDirectory=/home/pet-clinic
+ExecStart=/home/pet-clinic/jdk-22.0.1/bin/java -jar /home/pet-clinic/jenkins.war --enable-future-java
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

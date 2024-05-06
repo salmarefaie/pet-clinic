@@ -1,0 +1,6 @@
+- name: install tomcat
+  get_url:
+    url: https://dlcdn.apache.org/tomcat/tomcat-10/v10.1.23/bin/apache-tomcat-10.1.23.tar.gz
+    dest: /home/pet-clinic
+
+

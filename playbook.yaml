@@ -1,0 +1,15 @@
+- name: create pet-clinic user and install jdk         
+  hosts: localhost                                 
+  roles:
+    - role: roles/jdk-script
+
+
+- name: install required packages
+  become: true
+  become_method: su
+  become_user: pet-clinic    
+  hosts: localhost                                 
+  roles:
+    - role: roles/jenkins
+    - role: roles/tomcat
+    #- role: roles/nagios
