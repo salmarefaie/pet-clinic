@@ -11,11 +11,5 @@
 # - name: copy jenkins.service
 #   copy:
 #     src: jenkins.service
-#     dest: /etc/systemd/system/jenkins.service 
-
-
-# - name: Restart jenkins service
-#   service:
-#     name: jenkins
-#     state: started
-#     enabled: yes   
+#     dest: /etc/systemd/system/jenkins.service ... should make petclinic write in systemd using permision or acl or writing using root
+#   notify: Restart jenkins service

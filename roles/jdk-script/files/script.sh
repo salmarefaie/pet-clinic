@@ -33,8 +33,8 @@ $password
         echo " ------------------ "
         wget https://download.oracle.com/java/22/latest/jdk-22_linux-x64_bin.tar.gz 
         tar -xvzf jdk-22_linux-x64_bin.tar.gz 
-        echo 'export JAVA_HOME="/home/pet-clinic/jdk-22.0.1" ' >> /home/pet-clinic/.bashrc
-        echo 'export PATH="/home/pet-clinic/jdk-22.0.1/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games" ' >> /home/pet-clinic/.bashrc  
+        echo JAVA_HOME="/home/pet-clinic/jdk-22.0.1" >> /home/pet-clinic/.bashrc
+        echo PATH="/home/pet-clinic/jdk-22.0.1/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games" >> /home/pet-clinic/.bashrc  
         source .bashrc
         echo " ------------------- "
         echo "| java is installed |"

@@ -9,8 +9,10 @@
   become_method: su
   become_user: pet-clinic
   become_flags: '--login'    
-  hosts: localhost                              
+  hosts: localhost
+  environment:
+      JAVA_HOME: "/home/pet-clinic/jdk-22.0.1"                             
   roles:
-    #- role: roles/jenkins
     - role: roles/tomcat
+    - role: roles/jenkins
     #- role: roles/nagios

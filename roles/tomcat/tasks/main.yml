@@ -11,22 +11,34 @@
     remote_src: yes
 
 
-- name: Run 'id' command
-  command: id
-  register: id_output
-
-- name: Show 'id' command output
-  debug:
-        msg: "{{ id_output.stdout }}"
+# - name: know which user login now
+#   command: id
+#   register: id
 
 
-- name: Run 'id' command
-  command: pwd
-  register: java_output
+# - name: show output for id command
+#   debug:
+#         msg: "{{ id.stdout }}"
 
-- name: Show 'id' command output
-  debug:
-        msg: "{{ java_output.stdout }}"
+
+# - name: know the currnt path
+#   command: pwd
+#   register: current_path
+
+
+# - name: show output for pwd command
+#   debug:
+#         msg: "{{ current_path.stdout }}"
+
+
+# - name: know the contents in pet-clinic home
+#   command: ls
+#   register: contents
+
+
+# - name: show output for ls command
+#   debug:
+#         msg: "{{ contents.stdout }}"
 
 
 - name: make application running on port 9090
@@ -34,9 +46,6 @@
         path: /home/pet-clinic/apache-tomcat-10.1.23/conf/server.xml
         regexp: '<Connector port="8080"'
         line: '<Connector port="9090"'
-  notify:
-       - stop tomcat
-       - start tomcat
 
 
 - name: configure tomcat to have access to its manager
@@ -44,6 +53,11 @@
         path: /home/pet-clinic/apache-tomcat-10.1.23/conf/tomcat-users.xml 
         insertbefore: '</tomcat-users>'
         line: '<role rolename="manager-gui"/> <user username="tomcat" password="password" roles="manager-gui"/>'
-  notify:
-       - stop tomcat
-       - start tomcat
+
+
+- name: stop tomcat
+  shell: /home/pet-clinic/apache-tomcat-10.1.23/bin/shutdown.sh
+
+
+- name: start tomcat
+  shell: /home/pet-clinic/apache-tomcat-10.1.23/bin/startup.sh

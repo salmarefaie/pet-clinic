@@ -1,7 +1,0 @@
-- name: stop tomcat
-  command: >
-    JAVA_HOME="/home/pet-clinic/jdk-22.0.1"
-    /home/pet-clinic/apache-tomcat-10.1.23/bin/shutdown.sh
-
-- name: start tomcat
-  command: /home/pet-clinic/apache-tomcat-10.1.23/bin/startup.sh/
