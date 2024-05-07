@@ -24,8 +24,22 @@
      sudo apt install ansible
     ```
 
-2. clone the repo
+2. Clone the repo
 
     ```bash      
      git clone https://github.com/salmarefaie/pet-clinic.git
     ```
+
+3. Run playbook to install packages
+
+   ```bash
+     cd pet-clinic      
+     ansible-playbook playbook.yaml -K
+    ```
+
+4. Build and deploy the application using jenkins
+   - Jenkins is running on http://localhost:8080
+   - Create pet-clinic user to run pipeline by it
+   - Create new item and choose pipeline
+   - Copy the contents of jenkins file to configuration of pipeline
+   - Run the pipeline
