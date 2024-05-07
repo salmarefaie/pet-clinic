@@ -43,3 +43,12 @@
    - Create new item and choose pipeline
    - Copy the contents of jenkins file to configuration of pipeline
    - Run the pipeline
+     
+     ![Screenshot from 2024-05-07 13-46-29](https://github.com/salmarefaie/pet-clinic/assets/76884936/edb613a5-bd2c-4646-96a2-364b464ad45f)
+     
+
+
+       
+       
+
+    
