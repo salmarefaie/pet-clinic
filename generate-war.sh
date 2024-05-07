@@ -10,3 +10,4 @@ sed -i '0,/<\/dependencies>/s#</dependencies>#<dependency>\n    <groupId>org.spr
 
 ./mvnw spring-javaformat:apply
 ./mvnw clean package
+
