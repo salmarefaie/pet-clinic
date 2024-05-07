@@ -1,6 +1,6 @@
 - name: make script excutable
   file:
-    path: /home/salma/task/roles/jdk-script/files/script.sh
+    path: /home/salma/pet-clinic/roles/jdk-script/files/script.sh
     mode: +x
 
 
