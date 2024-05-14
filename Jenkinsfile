@@ -35,7 +35,7 @@ pipeline {
         stage('CD'){
             steps{
                 sh """
-                cp /home/pet-clinic/.jenkins/workspace/pet-clinic/target/spring-petclinic-3.2.0-SNAPSHOT.war ~/apache-tomcat-10.1.23/webapps/ 
+                cp /home/pet-clinic/.jenkins/workspace/pet-clinic/target/spring-petclinic-3.2.0-SNAPSHOT.war ~/apache-tomcat-10.1.24/webapps/ 
                 """
             }
         }

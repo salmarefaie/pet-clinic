@@ -1,2 +1,170 @@
----
-# tasks file for roles/nagios
+# - name: install gcc
+#   get_url:
+#     url: http://ftp.gnu.org/gnu/gcc/gcc-10.2.0/gcc-10.2.0.tar.gz
+#     dest: /home/pet-clinic
+
+
+# - name: extract gcc
+#   unarchive:
+#     src: /home/pet-clinic/gcc-10.2.0.tar.gz
+#     dest: /home/pet-clinic/
+#     remote_src: yes
+
+
+# - name: configure the build for gcc package
+#   shell: |
+#      cd /home/pet-clinic/gcc-10.2.0  
+#      ./configure
+#      make 
+#      make install
+
+
+# - name: install make
+#   get_url:
+#     url: https://ftp.gnu.org/gnu/make/make-4.4.tar.gz
+#     dest: /home/pet-clinic
+
+
+# - name: extract make
+#   unarchive:
+#     src: /home/pet-clinic/make-4.4.tar.gz
+#     dest: /home/pet-clinic/
+#     remote_src: yes
+
+
+# - name: configure the build for make package
+#   shell: |
+#      cd /home/pet-clinic/make-4.4
+#      ./configure
+#      make 
+#      make install
+
+
+# - name: install nagios
+#   get_url:
+#     url: https://assets.nagios.com/downloads/nagioscore/releases/nagios-4.4.11.tar.gz
+#     dest: /home/pet-clinic
+
+
+# - name: extract nagios
+#   unarchive:
+#     src: /home/pet-clinic/nagios-4.4.11.tar.gz
+#     dest: /home/pet-clinic/
+#     remote_src: yes
+
+
+# - name: run ./configure
+#   command: sudo source nagios-4.4.11/configure
+
+
+- name: install required packages
+  apt:
+    name: "{{ item }}"
+    update_cache: yes
+  loop:
+    - autoconf
+    - gcc
+    - libc6
+    - make
+    - apache2-utils
+    - php
+    - apache2
+    - libgd-dev
+    - libmcrypt-dev
+    - libssl-dev
+    - gawk
+    - build-essential
+    - snmp
+    - libnet-snmp-perl
+
+
+- name: install nagios
+  get_url:
+    url: https://assets.nagios.com/downloads/nagioscore/releases/nagios-4.5.1.tar.gz
+    dest: /tmp
+
+
+- name: extract nagios
+  unarchive:
+    src: /tmp/nagios-4.5.1.tar.gz
+    dest: /tmp
+    remote_src: yes
+
+
+- name: configure nagios
+  shell: cd /tmp/nagios-4.5.1 && ./configure && make all
+
+
+- name: create user and group for nagios 
+  shell: cd /tmp/nagios-4.5.1 && make install-groups-users
+
+
+- name: add apache user "wwwdata" to nagios group
+  user:
+    name: www-data
+    groups: nagcmd
+    append: yes
+
+
+- name: install nagios and requirements and configure
+  shell: cd /tmp/nagios-4.5.1 && make install && make install-init && make install-commandmode && make install-config && make install-webconf
+
+
+- name: enable rewrite and cgi modules of apache
+  shell: cd /tmp/nagios-4.5.1 && a2enmod rewrite && a2enmod cgi
+
+
+- name: configure ufw for apache
+  shell: ufw allow apache && ufw enable && ufw reload
+
+
+- name: restart apache service
+  service:
+    name: apache2
+    state: restarted
+
+
+- name: create admin user for nagios
+  command: htpasswd -cb /usr/local/nagios/etc/htpasswd.users nagiosadmin admin123
+
+
+- name: install nagios plugins
+  get_url:
+    url: https://nagios-plugins.org/download/nagios-plugins-2.4.10.tar.gz
+    dest: /tmp
+
+
+- name: extract nagios plugins
+  unarchive:
+    src: /tmp/nagios-plugins-2.4.10.tar.gz
+    dest: /tmp
+    remote_src: yes
+
+
+- name: configure nagios plugins
+  shell: cd /tmp/nagios-plugins-2.4.10 && ./configure && make && make install
+
+
+- name: start nagios service
+  service:
+    name: nagios
+    state: started
+
+
+- name: configure nagios to monitor tomcat
+  copy:
+    src: tomcat.cfg
+    dest: /usr/local/nagios/etc/objects/tomcat.cfg
+
+
+- name: Add a line to the end of a file
+  lineinfile:
+     path: /usr/local/nagios/etc/nagios.cfg
+     line: "cfg_file=/usr/local/nagios/etc/objects/tomcat.cfg"
+     insertafter: EOF
+
+
+- name: restart nagios service
+  service:
+    name: nagios
+    state: restarted

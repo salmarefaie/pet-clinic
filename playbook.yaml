@@ -15,4 +15,3 @@
   roles:
     - role: roles/tomcat
     - role: roles/jenkins
-    #- role: roles/nagios
