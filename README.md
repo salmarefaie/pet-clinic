@@ -5,6 +5,7 @@
 - Install Nagios and Jenkins using ansible.
 - Build the application https://github.com/spring-projects/spring-petclinic using shell scripting to generate a WAR file.
 - Build and deployment to tomcat by using Jenkins pipeline.
+- Configure nagios to monitor tomcat
 
 
 ## Tools
@@ -12,6 +13,7 @@
 - Ansible
 - Tomcat
 - Jenkins
+- Nagios
 
 
 ## How to run the project 
@@ -35,6 +37,7 @@
    ```bash
      cd pet-clinic      
      ansible-playbook playbook.yaml -K
+     ansible-playbook nagios-playbook.yaml -K
     ```
 
 4. Build and deploy the application using jenkins
